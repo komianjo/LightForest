@@ -1,0 +1,160 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:commands="clr-namespace:LightForest.UI.Commands"
+                    xmlns:behaviours="clr-namespace:LightForest.UI.Behaviours">
+
+   <commands:ShellMinimizeCommand x:Key="ShellMinimizeCommand" />
+   <commands:ShellMaximizeCommand x:Key="ShellMaximizeCommand" />
+   <commands:ShellCloseCommand x:Key="ShellCloseCommand" />
+
+   <!-- Style for Minimize, Maximize, and Restore buttons -->
+   <Style x:Key="ShellButtonStyle" TargetType="{x:Type Button}">
+      <Setter Property="Height" Value="25" />
+      <Setter Property="Width" Value="32" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="{StaticResource ShellBackBrush2}" />
+      <Setter Property="Template">
+         <Setter.Value>
+            <ControlTemplate TargetType="{x:Type Button}">
+               <Border Background="{TemplateBinding Background}">
+                  <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+               </Border>
+               <ControlTemplate.Triggers>
+                  <Trigger Property="IsMouseOver" Value="True">
+                     <Setter Property="Background" Value="{StaticResource ShellBackBrush2}" />
+                     <Setter Property="Foreground" Value="{StaticResource ShellForeBrush}" />
+                  </Trigger>
+                  <Trigger Property="IsPressed" Value="True">
+                     <Setter Property="Background" Value="{StaticResource ShellBackBrush}" />
+                     <Setter Property="Foreground" Value="{StaticResource ShellForeBrush}" />
+                  </Trigger>
+                  <Trigger Property="IsEnabled" Value="False">
+                     <Setter Property="Background" Value="Transparent" />
+                     <Setter Property="Foreground" Value="{StaticResource ShellBackBrush1}" />
+                  </Trigger>
+               </ControlTemplate.Triggers>
+            </ControlTemplate>
+         </Setter.Value>
+      </Setter>
+   </Style>
+
+   <!-- Style for the Close button -->
+   <Style x:Key="ShellAlertButtonStyle" TargetType="{x:Type Button}">
+      <Setter Property="Height" Value="25" />
+      <Setter Property="Width" Value="32" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="{StaticResource ShellBackBrush2}" />
+      <Setter Property="Template">
+         <Setter.Value>
+            <ControlTemplate TargetType="{x:Type Button}">
+               <Border Background="{TemplateBinding Background}">
+                  <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+               </Border>
+               <ControlTemplate.Triggers>
+                  <Trigger Property="IsMouseOver" Value="True">
+                     <Setter Property="Background" Value="{StaticResource ShellAlertBrush1}" />
+                     <Setter Property="Foreground" Value="{StaticResource ShellForeBrush}" />
+                  </Trigger>
+                  <Trigger Property="IsPressed" Value="True">
+                     <Setter Property="Background" Value="{StaticResource ShellAlertBrush0}" />
+                     <Setter Property="Foreground" Value="{StaticResource ShellForeBrush}" />
+                  </Trigger>
+                  <Trigger Property="IsEnabled" Value="False">
+                     <Setter Property="Background" Value="Transparent" />
+                     <Setter Property="Foreground" Value="{StaticResource ShellBackBrush1}" />
+                  </Trigger>
+               </ControlTemplate.Triggers>
+            </ControlTemplate>
+         </Setter.Value>
+      </Setter>
+   </Style>
+
+   <!-- Style for the vector paths used in the buttons. Makes sure they're crispy and not fuzzy. -->
+   <Style x:Key="ShellPathStyle" TargetType="{x:Type Path}">
+      <Setter Property="SnapsToDevicePixels" Value="True" />
+      <Setter Property="UseLayoutRounding" Value="True" />
+      <Setter Property="RenderOptions.EdgeMode" Value="Aliased" />
+   </Style>
+
+   <ControlTemplate x:Key="ShellTemplate" TargetType="{x:Type Window}">
+      <Decorator x:Name="ShellTemplateDecorator">
+         <Border Background="{TemplateBinding Background}"
+                 BorderThickness="{TemplateBinding BorderThickness}"
+                 BorderBrush="{TemplateBinding BorderBrush}">
+            <Grid>
+               <ContentPresenter x:Name="ShellContent"/>
+               <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Top" Fill="Transparent" Height="25"
+                          behaviours:ShellDragBehaviour.LeftMouseButtonDrag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+                          behaviours:ShellDoubleClickBehaviour.ExecuteCommand="{StaticResource ShellMaximizeCommand}"
+                          behaviours:ShellDoubleClickBehaviour.ExecuteCommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" />
+               <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">
+                  <Button Style="{StaticResource ShellButtonStyle}"
+                          ToolTip="{x:Static commands:ShellMinimizeCommand.ToolTip}"
+                          Command="{StaticResource ShellMinimizeCommand}"
+                          CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">
+                     <Path Style="{StaticResource ShellPathStyle}"
+                           Data="M0,0L0,2 7.999,2 7.999,0 0,0z"
+                           Margin="0,7,0,0"
+                           Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}" />
+                  </Button>
+                  <Button Style="{StaticResource ShellButtonStyle}" x:Name="ShellTemplateMaximizeButton"
+                          ToolTip="{x:Static commands:ShellMaximizeCommand.MaximizeToolTip}"
+                          Command="{StaticResource ShellMaximizeCommand}"
+                          CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">
+                     <Path Style="{StaticResource ShellPathStyle}"
+                           Data="M0,9.999L0,0 9.998,0 9.998,9.999 0,9.999z M8.998,3L1,3 1,8.999 8.999,8.999 8.999,3z"
+                           Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}" />
+                  </Button>
+                  <Button Style="{StaticResource ShellButtonStyle}" x:Name="ShellTemplateRestoreButton"
+                          Visibility="Collapsed"
+                          ToolTip="{x:Static commands:ShellMaximizeCommand.RestoreToolTip}"
+                          Command="{StaticResource ShellMaximizeCommand}"
+                          CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">
+                     <Path Style="{StaticResource ShellPathStyle}"
+                           Data="M8,6.999L8,9.999 0,9.999 0,3 2,3 2,0 9.999,0 9.999,6.999 8,6.999z M1,8.999L7,8.999 7,4.999 1,4.999 1,8.999z M8.999,2L3,2 3,3 8,3 8,5.999 8.999,5.999 8.999,2z"
+                           Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}" />
+                  </Button>
+                  <Button Style="{StaticResource ShellAlertButtonStyle}"
+                          ToolTip="{x:Static commands:ShellCloseCommand.ToolTip}"
+                          Command="{StaticResource ShellCloseCommand}"
+                          CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">
+                     <Path Style="{StaticResource ShellPathStyle}"
+                           Data="M10.009,1.704L8.331,0.026 5.03,3.327 1.703,0 0,1.704 3.326,5.031 0.025,8.332 1.703,10.009 5.004,6.708 8.305,10.009 10.009,8.305 6.708,5.005"
+                           Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}" />
+                  </Button>
+               </StackPanel>
+               <ResizeGrip x:Name="ShellTemplateResizeGrip" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Bottom" IsTabStop="false" />
+            </Grid>
+         </Border>
+      </Decorator>
+      <ControlTemplate.Triggers>
+         <Trigger Property="WindowState" Value="Maximized">
+            <Setter Property="Margin" Value="7,7,7,5" TargetName="ShellTemplateDecorator" />
+            <Setter Property="Visibility" Value="Collapsed" TargetName="ShellTemplateMaximizeButton" />
+            <Setter Property="Visibility" Value="Visible" TargetName="ShellTemplateRestoreButton" />
+         </Trigger>
+         <MultiTrigger>
+            <MultiTrigger.Conditions>
+               <Condition Property="ResizeMode" Value="CanResizeWithGrip" />
+               <Condition Property="WindowState" Value="Normal" />
+            </MultiTrigger.Conditions>
+            <Setter Property="Visibility" Value="Visible" TargetName="ShellTemplateResizeGrip" />
+         </MultiTrigger>
+      </ControlTemplate.Triggers>
+   </ControlTemplate>
+
+   <Style x:Key="ShellStyle" TargetType="{x:Type Window}">
+      <Setter Property="WindowStyle" Value="None" />
+      <Setter Property="AllowsTransparency" Value="True" />
+      <Setter Property="SnapsToDevicePixels" Value="True" />
+      <Setter Property="UseLayoutRounding" Value="True" />
+      <Setter Property="MinWidth" Value="200" />
+      <Setter Property="MinHeight" Value="46" />
+      <Setter Property="ResizeMode" Value="CanResizeWithGrip"></Setter>
+      <Setter Property="Background" Value="{StaticResource ShellBackBrush0}" />
+      <Setter Property="Foreground" Value="{StaticResource ShellForeBrush}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="BorderBrush" Value="{StaticResource ShellSeparatorBrush}" />
+      <Setter Property="Template" Value="{StaticResource ShellTemplate}" />
+   </Style>
+</ResourceDictionary>

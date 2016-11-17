@@ -1,4 +1,8 @@
 ﻿using System.Windows;
+using System.Windows.Media;
+using LightForest.Models;
+using LightForest.UI.Views;
+using LightForest.ViewModels;
 
 namespace LightForest
 {
@@ -9,9 +13,13 @@ namespace LightForest
    {
       public void OnStartUp(object sender, StartupEventArgs eventArgs)
       {
-         // TODO: Process any command line arguments here.
-         var shell = new ShellView();
-         shell.Show();
+         var shellForeBrush = this.TryFindResource("ShellForeBrush") as SolidColorBrush;
+         var foregroundColor = (shellForeBrush == null) ? Colors.White : shellForeBrush.Color;
+
+         var sketch = new Sketch();
+         var sketchViewModel = new SketchViewModel(sketch, foregroundColor);
+         var shellView = new ShellView(sketchViewModel);
+         shellView.Show();
       }
    }
 }

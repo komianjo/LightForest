@@ -1,0 +1,6 @@
+﻿<Window x:Class="LightForest.UI.Views.ShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Style="{StaticResource ShellStyle}">
+   <Image Source="{Binding Sketch}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+</Window>

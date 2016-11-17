@@ -3,5 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Startup="OnStartUp">
    <Application.Resources>
+      <ResourceDictionary>
+         <ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary Source="UI/Styles/ColorPalettes/Blueprint.xaml" />
+            <ResourceDictionary Source="UI/Styles/ShellStyle.xaml" />
+         </ResourceDictionary.MergedDictionaries>
+      </ResourceDictionary>
    </Application.Resources>
 </Application>
