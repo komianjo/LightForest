@@ -1,0 +1,30 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+   <!-- Background Color Brushes -->
+   <!-- These colors are to be used for large spaces of low importance. -->
+   <SolidColorBrush x:Key="ShellBackBrush4" Color="#FF54A0FF" />
+   <SolidColorBrush x:Key="ShellBackBrush3" Color="#FF4795F7" />
+   <SolidColorBrush x:Key="ShellBackBrush2" Color="#FF2F88EE" />
+   <SolidColorBrush x:Key="ShellBackBrush1" Color="#FF227FE7" />
+   <SolidColorBrush x:Key="ShellBackBrush0" Color="#FF0F72DA" />
+
+
+   <!-- Significant Color Brushes -->
+   <!-- These colors are to be used on main content, they should pop and be used in smaller regions. -->
+
+   <!-- For small areas of secondary focus, meant to draw attention to alert or warn. -->
+   <SolidColorBrush x:Key="ShellAlertBrush1" Color="#FFF04940" />
+
+   <!-- For small areas of primary focus, meant to remind the user of our alert or warning. -->
+   <SolidColorBrush x:Key="ShellAlertBrush0" Color="#FFC03A33" />
+
+   <!-- For high contrast foreground lines, not areas. Text, thin borders, or dots. -->
+   <SolidColorBrush x:Key="ShellForeBrush" Color="#FFFFFFFF" />
+
+   <!-- For dark border regions like splitters. -->
+   <SolidColorBrush x:Key="ShellSeparatorBrush" Color="#FF0657B0" />
+
+   <!-- For backgrounds on small, main focus items. -->
+   <SolidColorBrush x:Key="ShellBackBrush" Color="#FF0661BE" />
+</ResourceDictionary>
